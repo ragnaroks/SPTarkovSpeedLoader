@@ -1,0 +1,17 @@
+﻿using SPT.Reflection.Patching;
+using System;
+using System.Reflection;
+
+namespace SPTarkovSpeedLoader.AssemblyPatches_EFT__Player_PlayerInventoryController {
+    public class LoadMagazinePatch:ModulePatch {
+        protected override MethodBase GetTargetMethod () {
+            return typeof(EFT.Player.PlayerInventoryController)
+                .GetMethod(nameof(EFT.Player.PlayerInventoryController.LoadMagazine), BindingFlags.Public | BindingFlags.Instance);
+        }
+
+        [PatchPrefix]
+        public static void Prefix (AmmoItemClass sourceAmmo,MagazineItemClass magazine,Int32 loadCount, Boolean ignoreRestrictions) {
+            //
+        }
+    }
+}
