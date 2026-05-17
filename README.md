@@ -18,9 +18,12 @@ each tool provides **50%** speed coefficient, use multiplication instead of addi
 |tool count|final speed|
 |---|---|
 |0|1.52 second|
-|1|1.14 second|
-|2|0.85 second|
-|3|0.64 second|
+|1|0.76 second|
+|2|0.38 second|
+|3|0.19 second|
+
+### limit
+min load speed is 0.025, too fast will cause load action exception that make you can not load ammo in the raid any more
 
 ### source of idea
 ![idea](./Assets/idea.jpg)
