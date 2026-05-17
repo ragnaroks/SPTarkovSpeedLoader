@@ -1,7 +1,7 @@
 ﻿# SPTarkovSpeedLoader
 magazine speed-loader for SPTarkov
 
-will increase magazine's ammo load speed when your special slot have any **Leatherman Multitool**
+will increase magazine's ammo load speed when your **special slot** have any **Leatherman Multitool**
 
 the initial idea was to add a new item, but i didn't have the necessary skills that to made a new 3D model
 
@@ -13,7 +13,7 @@ when:
 
 the base coefficient is `0.85 * (1.0 - 0.054 + 0.85)` => `1.5266`
 
-each tool provides 75% speed coefficient, use multiplication instead of addition
+each tool provides **50%** speed coefficient, use multiplication instead of addition
 
 |tool count|final speed|
 |---|---|
