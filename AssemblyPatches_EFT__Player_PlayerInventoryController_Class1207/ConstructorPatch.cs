@@ -1,13 +1,10 @@
-﻿using SPT.Reflection.Patching;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using SPT.Reflection.Patching;
 
 namespace SPTarkovSpeedLoader.AssemblyPatches_EFT__Player_PlayerInventoryController_Class1207 {
     public class ConstructorPatch : ModulePatch {
-        private const String LeathermanMultitool = "544fb5454bdc2df8738b456a";
-        private const Single Coef = 0.75F;
-
         protected override MethodBase GetTargetMethod () {
             Type[] types = new Type[] {
                 typeof(EFT.InventoryLogic.InventoryController),
@@ -22,16 +19,20 @@ namespace SPTarkovSpeedLoader.AssemblyPatches_EFT__Player_PlayerInventoryControl
         [PatchPrefix]
         public static void Prefix (EFT.InventoryLogic.InventoryController inventoryController, ref Single loadOneAmmoSpeed) {
             if (SPTarkovSpeedLoaderPlugin.Enable?.Value != true) { return; }
+            if (loadOneAmmoSpeed <= Constants.MinSpeed) { return; }
             if (SPTarkovSpeedLoaderPlugin.Debug?.Value == true) {
-                SPTarkovSpeedLoaderPlugin.LogSource?.LogInfo(String.Concat("final unload speed: ",loadOneAmmoSpeed));
+                SPTarkovSpeedLoaderPlugin.LogSource?.LogInfo(String.Concat("final unload speed: ", loadOneAmmoSpeed));
             }
             IEnumerable<EFT.InventoryLogic.Item> items = inventoryController.Inventory.GetItemsInSlots(new List<EFT.InventoryLogic.EquipmentSlot>() { EFT.InventoryLogic.EquipmentSlot.Pockets });
             foreach (EFT.InventoryLogic.Item item in items) {
-                if (item.StringTemplateId != ConstructorPatch.LeathermanMultitool) { continue; }
-                loadOneAmmoSpeed *= ConstructorPatch.Coef;
-            }                        
+                if (item.StringTemplateId != Constants.LeathermanMultitool) { continue; }
+                loadOneAmmoSpeed *= Constants.Coef;
+            }
+            if (loadOneAmmoSpeed < Constants.MinSpeed) {
+                loadOneAmmoSpeed = Constants.MinSpeed;
+            }
             if (SPTarkovSpeedLoaderPlugin.Debug?.Value == true) {
-                SPTarkovSpeedLoaderPlugin.LogSource?.LogInfo(String.Concat("final unload speed: ",loadOneAmmoSpeed));
+                SPTarkovSpeedLoaderPlugin.LogSource?.LogInfo(String.Concat("final unload speed: ", loadOneAmmoSpeed));
             }
         }
     }
